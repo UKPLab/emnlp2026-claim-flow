@@ -2,7 +2,7 @@
   <img src='logo.png' width='200'>
 </p> -->
 
-# Claimflow
+# ClaimFlow
 
 > ${\color{red}\textsf{Under development}}$: This repository is still under active development.
 <!-- [![Arxiv](https://img.shields.io/badge/Arxiv-YYMM.NNNNN-red?style=flat-square&logo=arxiv&logoColor=white)](https://put-here-your-paper.com)
