@@ -1,104 +1,133 @@
-# HypoFlow
+<!-- <p align="center">
+  <img src='logo.png' width='200'>
+</p> -->
 
-HypoFlow is a pipeline for building a hypothesis-centric view of NLP literature. It ingests ACL Anthology papers, extracts structured sections, uses an LLM to pull out hypotheses with supporting evidence, builds a citation graph (with contexts), and optionally links hypotheses across citing/cited papers.
+# Claimflow
+<!-- [![Arxiv](https://img.shields.io/badge/Arxiv-YYMM.NNNNN-red?style=flat-square&logo=arxiv&logoColor=white)](https://put-here-your-paper.com)
+[![License](https://img.shields.io/github/license/OWNER/claimflow)](https://opensource.org/licenses/Apache-2.0)
+[![Python Versions](https://img.shields.io/badge/Python-3.10%2B-blue.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/)
+[![CI](https://github.com/UKPLab/arxiv2026-claim-flow/actions/workflows/main.yml/badge.svg)](https://github.com/UKPLab/arxiv2026-claim-flow/actions/workflows/main.yml) -->
 
-## What it does
-- Downloads ACL Anthology metadata into DuckDB.
-- Fetches PDFs and stores them on disk.
-- Parses PDFs (Docling) to capture abstract/introduction/conclusion text.
-- Extracts hypotheses and evidence contexts with Azure OpenAI.
-- Builds a citation graph from Semantic Scholar (contexts + intents).
-- Links hypotheses across citations with LLM classification.
+ClaimFlow is a pipeline for building a claim-centric view of NLP literature. It ingests ACL Anthology papers, extracts sections, uses an LLM-based framework to extract claims with evidence, builds a citation graph, and can link claims across citing/cited papers.
 
-## Requirements
-- Python 3.10+
-- DuckDB, Docling, and the dependencies in `pyproject.toml`
-- Azure OpenAI credentials for hypothesis extraction and linking
-- Semantic Scholar API key for citation graph building
+> **Abstract:** Scientific papers do more than report results -- they advance _claims_ that later work supports, extends, or sometimes refutes. Yet existing methods for citation and claim analysis capture only fragments of this dialogue, obscuring how scientific claims interact over time. In this work, we make these interactions explicit at the level of individual scientific claims. We introduce `ClaimFlow`, a claim-centric view of the NLP literature, built from $304$ ACL Anthology papers (1979--2025) that are manually annotated with $1{,}084$ claims and $832$ cross-paper claim relations, indicating whether a citing paper _supports_, _extends_, _qualifies_, _refutes_, or references a claim as _background_. Using `ClaimFlow`, we define a new task -- _Claim Relation Classification_ -- which requires models to infer the scientific stance toward a cited claim from its text and citation context. 
+We present our experimental results for this task and apply our model to $\sim$$13k$ NLP papers to analyze how claims evolve across decades of NLP research. Our analysis reveals that $63.5\%$ claims are never reused; only $11.1\%$ are ever challenged, and such challenges are typically short-lived, and widely propagated claims are more often _reshaped_ through qualification and extension than confirmed or refuted. Overall `ClaimFlow` offers a lens for examining how ideas shift and mature within NLP, and a foundation for assessing whether models can interpret scientific argumentation.
 
-## Install
-Use `uv` (recommended) or `pip`.
+Contact person: [Aniket Pramanick](mailto:aniketpramanick26@gmail.com)
 
+<!-- [Project page](https://REPLACE_ME.com) | [Organization](https://REPLACE_ME.com) -->
+
+Don't hesitate to send us an e-mail or report an issue if something is broken (and it shouldn't be) or if you have further questions.
+
+
+## Getting Started
+
+1. Create a virtual environment and install dependencies:
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .
+```
+
+Or with `uv`:
 ```bash
 uv sync
 ```
 
-```bash
-pip install -e .
-```
-
-## Configuration
-Create a `.env` file in the repo root (or export these vars):
-
+2. Configure required environment variables (create a `.env` file or export them):
 ```bash
 AZURE_OPENAI_ENDPOINT=...
 AZURE_OPENAI_API_KEY=...
-AZURE_OPENAI_DEPLOYMENT=gpt-4o-mini
-AZURE_OPENAI_API_VERSION=2024-10-21
+AZURE_OPENAI_DEPLOYMENT=...
+AZURE_OPENAI_API_VERSION=...
 S2_API_KEY=...
 ```
 
-Only `S2_API_KEY` is required for citation crawling; the Azure settings are required for hypothesis extraction/linking.
-
-## Pipeline usage
-The CLI entry points are defined in `pyproject.toml`. The examples below use `uv run`, but the equivalent is `python -m scripts.<name>`.
-
-1) Download ACL metadata (writes to `db/aclanthology.duckdb`):
-
+3. Run the pipeline end-to-end (example):
 ```bash
 uv run get_meta --max-papers 1000 --venues "acl,emnlp"
-```
-
-2) Download PDFs (writes to `data/aclanthology/...` and updates `papers` table):
-
-```bash
 uv run get_papers --start 2018 --end 2024 --max-papers 200 --workers 8
-```
-
-3) Parse PDFs with Docling (writes to `processed` table):
-
-```bash
 uv run parse_papers --workers 4 --docling-threads 2 --mode patch
+uv run get_claims
+uv run get_citations
+python -m claimflow.link_claimstheses
 ```
 
-4) Extract hypotheses with Azure OpenAI (writes to `hypotheses` table):
+## Usage
 
-```bash
-uv run get_hypotheses
+### Using the classes
+
+To import classes/methods of `claimflow` from inside the package itself you can use relative imports:
+
+```py
+from .process_papers import ingest_papers
+
+ingest_papers()
 ```
 
-5) Build citation graph with Semantic Scholar (writes to `citations` table):
+To import classes/methods from outside the package (e.g. when you want to use the package in some other project) you can instead refer to the package name:
+
+```py
+from claimflow.process_papers import ingest_papers
+
+ingest_papers()
+```
+
+### Using scripts
+
+This is how you can use `claimflow` from the command line:
 
 ```bash
+uv run get_meta
+uv run get_papers
+uv run parse_papers
+uv run get_claims
 uv run get_citations
 ```
 
-6) (Optional) Link hypotheses across citations:
+### Expected results
+
+After running the pipeline, you should expect:
+- A DuckDB database at `db/aclanthology.duckdb` with `meta`, `papers`, `processed`, `claims`, `citations`, and `claim_links` tables.
+- Downloaded PDFs under `data/aclanthology/<year>/<venue>/<paper_id>.pdf`.
+- Processed section text stored in `processed.processed` as JSON.
+
+### Parameter description
+
+* `--max-papers`: Limit the number of records downloaded or processed.
+* `--start`, `--end`: Filter paper years for PDF downloads.
+* `--workers`: Number of concurrent workers for PDF downloads or parsing.
+* `--docling-threads`: Threads per Docling converter worker.
+* `--mode`: `patch` to process only missing papers, `full` to reprocess all.
+* `--venues`: Comma-separated ACL venue slugs (e.g., `acl,emnlp`).
+* `--db-path`: Path to the DuckDB database file.
+
+## Development
+
+Install dev dependencies and run your tooling of choice (ruff/mypy/pytest):
 
 ```bash
-python -m hypoflow.link_hypotheses
+uv sync --dev
 ```
 
-## Data layout
-- `db/aclanthology.duckdb`: primary datastore.
-- `data/aclanthology/`: PDF archive (organized by year/venue).
+<!-- ## Cite
 
-Key tables in DuckDB:
-- `meta`: ACL metadata (title, authors, year, pdf_url, venue, etc.).
-- `papers`: downloaded PDF records (status, sha1, save_path).
-- `processed`: extracted sections per paper.
-- `hypotheses`: LLM-extracted hypotheses + evidence.
-- `citations` and `citation_status`: citation graph + crawl state.
-- `hypotheses_links`: LLM-labeled relations between citing/cited hypotheses.
+Please use the following citation:
 
-## Analysis
-The `analysis/` folder contains scripts used for research questions and summary stats. Example:
-
-```bash
-python analysis/rqs/q1_hypotheses_per_paper_over_time.py --input path/to/hypotheses.jsonl --out analysis/plots/q1_hypotheses_over_time.pdf
 ```
+@InProceedings{smith:20xx:CONFERENCE_TITLE,
+  author    = {Smith, John},
+  title     = {My Paper Title},
+  booktitle = {Proceedings of the 20XX Conference on XXXX},
+  month     = mmm,
+  year      = {20xx},
+  address   = {Gotham City, USA},
+  publisher = {Association for XXX},
+  pages     = {XXXX--XXXX},
+  url       = {http://xxxx.xxx}
+}
+``` -->
 
-## Notes
-- `parse_papers` defaults to patch mode and only processes papers missing from `processed`.
-- The citation crawler is rate-limited to respect Semantic Scholar limits.
-- If you hit LLM content filters during extraction/linking, the offending paper is skipped.
+## Disclaimer
+
+> This repository contains experimental software and is published for the sole purpose of giving additional background details on the respective publication.
