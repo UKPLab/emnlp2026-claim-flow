@@ -229,7 +229,6 @@ __marimo__/
 # Datafiles
 db/
 assets/
-data/
 locales/
 analysis/
 claimflow/
