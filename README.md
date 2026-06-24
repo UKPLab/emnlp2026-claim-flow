@@ -37,11 +37,11 @@ By accessing or using this dataset, you agree that:
 
 Feedback, comments, and suggestions are welcome and appreciated.
 
-For questions regarding the dataset, please contact:
+For questions regarding the dataset, please contact the authors:
 
-[Aniket Pramanick](mailto:aniketpramanick26@gmail.com)
-[Yufang Hou](mailto: yufang.hou@it-u.at)
-[Saif M. Mohammad](saif.mohammad@nrc-cnrc.gc.ca)
+[Aniket Pramanick](mailto:aniketpramanick26@gmail.com), 
+[Yufang Hou](mailto:yufang.hou@it-u.at),
+[Saif M. Mohammad](saif.mohammad@nrc-cnrc.gc.ca).
 
 ## Limitations and Disclaimer
 
