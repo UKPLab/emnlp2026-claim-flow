@@ -1,0 +1,26 @@
+CLAIMFLOW PREVIEW DATASET LICENSE
+
+Version 1.0
+June 2026
+
+Copyright © 2026 Aniket Pramanick.
+All rights reserved.
+
+Permission is granted to the recipient of this dataset to access and use the dataset solely for personal academic research, evaluation, and discussion purposes.
+
+The recipient may NOT:
+
+1. Redistribute the dataset or any substantial portion of it.
+2. Upload the dataset to public repositories, websites, cloud services, or data-sharing platforms.
+3. Share the dataset with third parties.
+4. Use the dataset in publications, benchmarks, commercial systems, or public releases without prior written permission.
+5. Remove copyright notices or attribution information.
+6. Claim ownership of the dataset or any derivative version of the dataset.
+
+The dataset remains the intellectual property of the dataset owner.
+
+No rights are granted beyond those explicitly stated in this license.
+
+THE DATASET IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED.
+
+For permission requests, please contact the dataset owner.

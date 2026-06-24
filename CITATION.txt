@@ -1,0 +1,13 @@
+ClaimFlow Dataset (Preview Version)
+
+This dataset is associated with an unpublished research project currently under review.
+
+If you wish to use this dataset in research, please contact the dataset owner before publication.
+
+Citation information will be updated upon publication of the paper.
+
+Owner:
+Aniket Pramanick
+
+Version:
+Preview v0.1

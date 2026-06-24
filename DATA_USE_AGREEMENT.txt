@@ -1,0 +1,21 @@
+DATA USE AGREEMENT
+
+By accessing this dataset, the recipient agrees that:
+
+1. The dataset will be used solely for research evaluation and discussion purposes.
+2. The dataset will not be redistributed to any third party.
+3. The dataset will not be uploaded to public repositories or websites.
+4. The dataset will not be used in publications, benchmarks, competitions, or commercial products without prior written permission.
+5. The dataset owner retains all intellectual property rights.
+6. Any discovered errors, concerns, or issues may be reported to the dataset owner.
+
+The recipient acknowledges that the dataset is part of ongoing unpublished research and agrees to respect the confidentiality of the resource.
+
+Dataset:
+ClaimFlow (Preview Version)
+
+Owner:
+Aniket Pramanick
+
+Version:
+Preview v0.1
