@@ -3,7 +3,7 @@ CLAIMFLOW PREVIEW DATASET LICENSE
 Version 1.0
 June 2026
 
-Copyright © 2026 Aniket Pramanick.
+Copyright © Ubiquitous Knowledge Processing (UKP) Lab, Technische Universität Darmstadt
 All rights reserved.
 
 Permission is granted to the recipient of this dataset to access and use the dataset solely for personal academic research, evaluation, and discussion purposes.

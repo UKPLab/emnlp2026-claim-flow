@@ -40,6 +40,8 @@ Feedback, comments, and suggestions are welcome and appreciated.
 For questions regarding the dataset, please contact:
 
 [Aniket Pramanick](mailto:aniketpramanick26@gmail.com)
+[Yufang Hou](mailto: yufang.hou@it-u.at)
+[Saif M. Mohammad](saif.mohammad@nrc-cnrc.gc.ca)
 
 ## Limitations and Disclaimer
 
@@ -51,4 +53,4 @@ Users are responsible for validating the data before drawing conclusions or usin
 
 The dataset is provided "as is" without warranty of any kind. The owner makes no guarantees regarding completeness, correctness, or fitness for a particular purpose.
 
-Copyright © 2026 Aniket Pramanick. All rights reserved.
+Copyright © Ubiquitous Knowledge Processing (UKP) Lab, Technische Universität Darmstadt. All rights reserved.
